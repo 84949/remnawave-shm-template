@@ -105,15 +105,18 @@ curl -sk -H "Authorization: Bearer <TOKEN>" https://panel.example.com/api/intern
 
 ---
 
-## 🤝 Автор
-
-**Sergey Ryabkov**  
-GitHub: [@ryabkov82](https://github.com/ryabkov82)  
-Проект: [VPN for Friends](https://t.me/vpn_for_myfriends_bot)
-
 ## 🔗 Связанные проекты
 
 | Проект | Описание |
 |--------|-----------|
 | [Remnawave Panel](https://github.com/remnawave) | Панель управления VLESS/Xray нодами с API и Dashboard |
 | [SHM (Server Hosting Manager)](https://github.com/danuk/shm) | Система биллинга и управления VPN/хостинг-услугами |
+
+---
+
+## 🤝 Автор
+
+**Sergey Ryabkov**  
+GitHub: [@ryabkov82](https://github.com/ryabkov82)  
+Проект: [VPN for Friends](https://t.me/vpn_for_myfriends_bot)
+
