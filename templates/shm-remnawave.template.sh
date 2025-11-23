@@ -21,6 +21,12 @@ REMNAWAVE_SHM_TZ="{{ server.settings.remnawave.shm_tz }}"
 REMNAWAVE_EXPIRE_SAFETY_MINUTES="{{ server.settings.remnawave.expire_safety_minutes }}"
 
 USERNAME="us_{{ us.id }}"
+SANITIZE_USERNAME="{{ server.settings.remnawave.sanitize_username | default(false) }}"
+if [[ "${SANITIZE_USERNAME}" == "true" ]]; then
+  USERNAME_SANITIZED="$(_sanitize_username "${USERNAME}")"
+else
+  USERNAME_SANITIZED="${USERNAME}"
+fi
 STATUS_ACTIVE="ACTIVE"
 STATUS_DISABLED="DISABLED"
 
@@ -38,6 +44,25 @@ _http_post()  { local p="$1"; shift; curl -skS -X POST -H "$(_auth_header)" -H '
 _http_patch() { local p="$1"; shift; curl -skS -X PATCH -H "$(_auth_header)" -H 'Content-Type: application/json' "$@" "${PANEL_URL}${p}"; }
 
 # Helpers
+
+_sanitize_username() {
+  local input="$1"
+  local out=""
+  local c
+  for ((i=0; i<${#input}; i++)); do
+    c="${input:$i:1}"
+    if [[ "$c" =~ [a-zA-Z0-9_-] ]]; then
+      out+="$c"
+    else
+      out+="_"
+    fi
+  done
+  if (( ${#out} < 6 )); then
+    out="${out}$(printf '%0.s_' $(seq $((6 - ${#out}))))"
+  fi
+  echo "$out"
+}
+
 # Expire: interpret {{ us.expire }} as LOCAL time in SHM TZ (or system TZ), then output UTC (Z)
 _expire_iso() {
   local base="{{ us.expire }}"
@@ -138,7 +163,7 @@ case "${EVENT}" in
     [[ -n "${uuid}" ]] || fail "Create user failed: ${resp}"
 
     log "Fetch subscription JSON"
-    sub_json="$(_subscription_json_by_username "${USERNAME}")"
+    sub_json="$(_subscription_json_by_username "${USERNAME_SANITIZED}")"
     sub_json_body="$(echo "${sub_json}" | _normalize_subscription_json | jq -c '.response')"
 
     log "Upload JSON to SHM key vpn_mrzb_{{ us.id }}"
@@ -154,8 +179,8 @@ case "${EVENT}" in
     ;;
 
   ACTIVATE)
-    log "Activate ${USERNAME}"
-    uuid="$(_user_uuid_by_username "${USERNAME}")"
+    log "Activate ${USERNAME_SANITIZED}"
+    uuid="$(_user_uuid_by_username "${USERNAME_SANITIZED}")"
     [[ -n "${uuid}" ]] || fail "User not found: ${USERNAME}"
 
     _enable_user "${uuid}"
@@ -165,16 +190,16 @@ case "${EVENT}" in
     ;;
 
   BLOCK)
-    log "Block ${USERNAME}"
-    uuid="$(_user_uuid_by_username "${USERNAME}")"
+    log "Block ${USERNAME_SANITIZED}"
+    uuid="$(_user_uuid_by_username "${USERNAME_SANITIZED}")"
     [[ -n "${uuid}" ]] || fail "User not found: ${USERNAME}"
     _disable_user "${uuid}"
     log "done"
     ;;
 
   REMOVE)
-    log "Remove ${USERNAME}"
-    uuid="$(_user_uuid_by_username "${USERNAME}")"
+    log "Remove ${USERNAME_SANITIZED}"
+    uuid="$(_user_uuid_by_username "${USERNAME_SANITIZED}")"
     [[ -n "${uuid}" ]] || fail "User not found: ${USERNAME}"
 
     _bulk_revoke_subscription "${uuid}"
@@ -186,8 +211,8 @@ case "${EVENT}" in
     ;;
 
   PROLONGATE)
-    log "Prolongate ${USERNAME} + reset traffic"
-    uuid="$(_user_uuid_by_username "${USERNAME}")"
+    log "Prolongate ${USERNAME_SANITIZED} + reset traffic"
+    uuid="$(_user_uuid_by_username "${USERNAME_SANITIZED}")"
     [[ -n "${uuid}" ]] || fail "User not found: ${USERNAME}"
 
     _reset_user_traffic "${uuid}"
@@ -197,8 +222,8 @@ case "${EVENT}" in
     ;;
 
   UPDATE)
-    log "Update SHM JSON for ${USERNAME}"
-    sub_json="$(_subscription_json_by_username "${USERNAME}")"
+    log "Update SHM JSON for ${USERNAME_SANITIZED}"
+    sub_json="$(_subscription_json_by_username "${USERNAME_SANITIZED}")"
     sub_json_body="$(echo "${sub_json}" | _normalize_subscription_json | jq -c '.response')"
     echo "${sub_json_body}" | jq -c '.' > /tmp/payload.json
     curl -skS -X PUT \
