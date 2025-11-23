@@ -21,7 +21,8 @@ REMNAWAVE_SHM_TZ="{{ server.settings.remnawave.shm_tz }}"
 REMNAWAVE_EXPIRE_SAFETY_MINUTES="{{ server.settings.remnawave.expire_safety_minutes }}"
 
 USERNAME="us_{{ us.id }}"
-SANITIZE_USERNAME="{{ server.settings.remnawave.sanitize_username | default(false) }}"
+SANITIZE_USERNAME="{{ server.settings.remnawave.sanitize_username }}"
+SANITIZE_USERNAME="${SANITIZE_USERNAME:-false}"
 if [[ "${SANITIZE_USERNAME}" == "true" ]]; then
   USERNAME_SANITIZED="$(_sanitize_username "${USERNAME}")"
 else
